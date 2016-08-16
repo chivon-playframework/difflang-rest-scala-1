@@ -10,7 +10,11 @@ libraryDependencies ++= Seq(
   jdbc,
   cache,
   ws,
-  "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
+  "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test,
+  "org.reactivemongo" %% "play2-reactivemongo" % "0.11.12",
+  "org.specs2" %% "specs2-core" % "3.6.5" % "test",
+  "org.specs2" %% "specs2-junit" % "3.6.5" % "test",
+  "org.specs2" %% "specs2-mock" % "3.6.5" % "test"
 )
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
