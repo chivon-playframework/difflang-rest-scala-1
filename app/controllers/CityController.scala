@@ -12,12 +12,20 @@ import reactivemongo.play.json.collection._
 import utils.Errors
 import scala.concurrent.{ExecutionContext, Future}
 
+@Singleton    // Injection scope
 class CityController  @Inject()(val reactiveMongoApi: ReactiveMongoApi)
                                (implicit exec: ExecutionContext)
-extends Controller with MongoController with ReactiveMongoComponents {
+      extends Controller with MongoController with ReactiveMongoComponents {
 
-  def citiesFuture: Future[JSONCollection] = database.map(_.collection[JSONCollection]("city"))
+  // Future[JSONCollection]
+  // database.map()
+  // collection[JSONCollection]("city")
+  // Gets city JSONCollection from among all collection in the MongoDB database
+  def citiesFuture: Future[JSONCollection] = database.map(_.collection[JSONCollection]("cities"))
 
+  // Create a new city document given the name and population properties
+  // We have cities collection so we add one more City document to it
+  // We are using for { } comprehension
   def create(name: String, population: Int) = Action.async {
     for {
       cities <- citiesFuture
@@ -26,6 +34,11 @@ extends Controller with MongoController with ReactiveMongoComponents {
       Ok("Mongo LastError: %s".format(lastError))
   }
 
+  // We can also create City document given City Json data
+  // We are using Json body parser to extract the Json data from the request
+  // One we have it, we can Json.fromJson() method to deserialize it into City instance
+  // We use pattern match to check the deserialization operation. If we can deserialize the Json data
+  // successfully, we insert the data into the collections; otherwise, we notify the user of bad request
   def createFromJson = Action.async(parse.json) { request =>
     Json.fromJson[City](request.body) match {
       case JsSuccess(city, _) =>
@@ -41,6 +54,7 @@ extends Controller with MongoController with ReactiveMongoComponents {
     }
   }
 
+  // We can also handle the Seq[City]
   def createBulkFromJson = Action.async(parse.json) { request =>
     Json.fromJson[Seq[City]](request.body) match {
       case JsSuccess(newCities, _) =>
@@ -56,17 +70,18 @@ extends Controller with MongoController with ReactiveMongoComponents {
     }
   }
 
+  // We can look for the City document by name
+  // Let's do our query
+  // Find all cities with name `name`
+  // Perform the query and get a cursor of JsObject
+  // Collect the results as a list
+  // Everything's ok! Let's reply with a JsValue
   def findByName(name: String) = Action.async {
-    // let's do our query
     val futureCitiesList: Future[List[City]] = citiesFuture.flatMap {
-      // find all cities with name `name`
       _.find(Json.obj("name" -> name)).
-        // perform the query and get a cursor of JsObject
         cursor[City](ReadPreference.primary).
-        // Collect the results as a list
         collect[List]()
     }
-    // everything's ok! Let's reply with a JsValue
     futureCitiesList.map { cities =>
       Ok(Json.toJson(cities))
     }
