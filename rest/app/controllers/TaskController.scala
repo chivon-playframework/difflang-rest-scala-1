@@ -11,9 +11,10 @@ import javax.inject.Inject
 import play.api.i18n.{ MessagesApi }
 import java.util.Date
 
-class Tasks @Inject() (val messagesApi: MessagesApi) extends api.ApiController {
+class TaskController @Inject()(val messagesApi: MessagesApi) extends api.ApiController {
 
-  def list(folderId: Long, q: Option[String], done: Option[Boolean], sort: Option[String], p: Int, s: Int) = SecuredApiAction { implicit request =>
+  def list(folderId: Long, q: Option[String], done: Option[Boolean], sort: Option[String], p: Int, s: Int) =
+    SecuredApiAction { implicit request =>
     sortedPage(sort, Task.sortingFields, default = "order") { sortingFields =>
       Task.page(folderId, q, done, sortingFields, p, s)
     }

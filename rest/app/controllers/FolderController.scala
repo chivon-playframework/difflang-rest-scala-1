@@ -10,7 +10,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import javax.inject.Inject
 import play.api.i18n.{ MessagesApi }
 
-class Folders @Inject() (val messagesApi: MessagesApi) extends api.ApiController {
+class FolderController @Inject()(val messagesApi: MessagesApi) extends api.ApiController {
 
   def list(sort: Option[String], p: Int, s: Int) = SecuredApiAction { implicit request =>
     sortedPage(sort, Folder.sortingFields, default = "order") { sortingFields =>
@@ -22,7 +22,7 @@ class Folders @Inject() (val messagesApi: MessagesApi) extends api.ApiController
   def insert = SecuredApiActionWithBody { implicit request =>
     readFromRequest[Folder] { folder =>
       Folder.insert(request.userId, folder.name).flatMap {
-        case (id, newFolder) => created(Api.locationHeader(routes.Folders.info(id)))
+        case (id, newFolder) => created(Api.locationHeader(routes.FolderController.info(id)))
       }
     }
   }
