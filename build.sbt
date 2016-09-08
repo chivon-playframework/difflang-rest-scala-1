@@ -40,7 +40,6 @@ resolvers += "zxing" at "https://mvnrepository.com/artifact/com.google.zxing/cor
 resolvers += "libsms" at "https://mvnrepository.com/artifact/com.wix.sms/libsms-api"
 resolvers += "cassandra" at "https://mvnrepository.com/artifact/org.apache.cassandra/cassandra-all"
 
-// https://mvnrepository.com/
 
 
 
