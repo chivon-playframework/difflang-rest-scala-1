@@ -36,6 +36,8 @@ import static com.mongodb.client.model.Projections.excludeId;
  * http://www.nurkiewicz.com/2013/05/java-8-definitive-guide-to.html
  * http://stackoverflow.com/questions/33257459/mongodb-async-java-driver-find
  * http://www.slideshare.net/hermannhueck/reactive-access-to-mongodb-from-java-8
+ * https://github.com/jmnarloch/rxjava-spring-boot-starter
+ * http://www.deadcoderising.com/java8-writing-asynchronous-code-with-completablefuture/
  */
 public class MongoRepo implements IMongoRepo {
     private Configuration configuration;
