@@ -1,12 +1,14 @@
 package repos;
 
+import enums.Env;
 import org.bson.Document;
-import scala.concurrent.Promise;
 import java.util.List;
 import java.util.concurrent.*;
 
 interface IMongoRepo {
+    void init(Env env);
     void setCollection(String collectionName);
-    CompletionStage<List<Document>> find();
-    CompletionStage<List<Document>> findEqual(String field, String value);
+    void createCollection(String collectionName);
+    CompletableFuture<List<Document>> find();
+    CompletableFuture<List<Document>> findEqual(String field, String value);
 }
