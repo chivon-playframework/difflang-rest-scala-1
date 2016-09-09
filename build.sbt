@@ -10,8 +10,8 @@ libraryDependencies ++= Seq(
   javaJdbc,
   cache,
   javaWs,
-  "org.mongodb" % "mongodb-driver-async" % "3.0.4",
-  "org.mongodb" % "mongodb-driver-core" % "3.0.4",
+  // "org.mongodb" % "mongodb-driver-async" % "3.0.4",
+  // "org.mongodb" % "mongodb-driver-core" % "3.0.4",
   "org.mongodb" % "bson" % "3.0.4",
   "org.elasticsearch" % "elasticsearch" % "1.7.2",
   "com.google.code.gson" % "gson" % "2.7",
@@ -27,7 +27,25 @@ libraryDependencies ++= Seq(
   "org.apache.poi" % "poi" % "3.14",
   "com.google.zxing" % "core" % "3.2.1",
   "com.wix.sms" % "libsms-api" % "1.0.0",
-  "org.apache.cassandra" % "cassandra-all" % "3.7"
+  "org.apache.cassandra" % "cassandra-all" % "3.7",
+  // Date: 2016-09-08
+  "com.typesafe.akka" %% "akka-stream" % "2.4.8",
+  "org.reactivemongo" %% "reactivemongo" % "0.11.14",
+  "com.typesafe.play" %% "play-streams" % "2.5.4",
+  "org.mongodb.scala" %% "mongo-scala-driver" % "1.1.1",
+  "org.mongodb" %% "casbah" % "3.1.1",
+  "org.mongodb" % "mongo-java-driver" % "3.3.0",
+  "org.mongodb" % "mongodb-driver-async" % "3.3.0",
+  "org.mongodb" % "mongodb-driver-rx" % "1.2.0",
+  "org.mongodb" % "mongodb-driver-reactivestreams" % "1.2.0",
+  "org.mongodb.morphia" % "morphia" % "1.1.1",
+  "io.reactivex" % "rxjava-reactive-streams" % "1.1.1",
+  "io.reactivex" % "rxscala_2.11" % "0.26.2",
+  "ch.qos.logback" % "logback-classic" % "1.1.1",
+  "com.typesafe.akka" %% "akka-testkit" % "2.4.8" % "test",
+  "org.scalatest" %% "scalatest" % "2.2.6" % "test",
+  "junit" % "junit" % "4.12" % "test",
+  "com.novocode" % "junit-interface" % "0.11" % "test"
 )
 resolvers += "Humble video" at "https://mvnrepository.com/artifact/io.humble/humble-video-noarch"
 resolvers += "gson" at "https://mvnrepository.com/artifact/com.google.code.gson/gson"
