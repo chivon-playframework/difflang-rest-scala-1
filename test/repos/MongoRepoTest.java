@@ -30,10 +30,4 @@ public class MongoRepoTest {
     public void testConnection() {
        assertNotNull(this.mongoRepo);
     }
-
-    @Test
-    public void testFind() {
-        CompletableFuture<List<Document>> future = this.mongoRepo.find();
-        assertNotNull(future);
-    }
 }
