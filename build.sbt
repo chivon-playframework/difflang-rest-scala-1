@@ -16,6 +16,12 @@ scalacOptions ++= Seq("-Xmax-classfile-name", "254")
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 resolvers += "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
+resolvers += "Humble video" at "https://mvnrepository.com/artifact/io.humble/humble-video-noarch"
+resolvers += "gson" at "https://mvnrepository.com/artifact/com.google.code.gson/gson"
+resolvers += "pdfbox" at "https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox"
+resolvers += "apache poi" at "https://mvnrepository.com/artifact/org.apache.poi/poi"
+resolvers += "zxing" at "https://mvnrepository.com/artifact/com.google.zxing/core"
+resolvers += "libsms" at "https://mvnrepository.com/artifact/com.wix.sms/libsms-api"
 
 doc in Compile <<= target.map(_ / "none")
 
