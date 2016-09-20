@@ -22,5 +22,7 @@ scalariformSettings
 
 libraryDependencies ++= Seq(
   specs2 % Test,
-	"org.specs2" %% "specs2-matcher-extra" % "3.8.5" % Test
+	"org.specs2" %% "specs2-matcher-extra" % "3.8.5" % Test,
+  "io.swagger" %% "swagger-play2" % "1.5.1",
+  "org.webjars" % "swagger-ui" % "2.1.8-M1"
 )
