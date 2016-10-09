@@ -41,5 +41,7 @@ libraryDependencies ++= Seq(
   "com.google.code.gson" % "gson" % "2.7",
   "com.paypal.sdk" % "rest-api-sdk" % "1.4.1",
   "com.stripe" % "stripe-java" % "2.8.0",
-  "io.humble" % "humble-video-noarch" % "0.2.1"
+  "io.humble" % "humble-video-noarch" % "0.2.1",
+  "org.scalactic" %% "scalactic" % "3.0.0",
+  "org.scalatest" %% "scalatest" % "3.0.0" % "test"
 )
