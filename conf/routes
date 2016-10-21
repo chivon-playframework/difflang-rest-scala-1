@@ -46,3 +46,14 @@ GET			/assets/*file				controllers.Assets.versioned(path="/public", file: Asset)
 # SHOW FAKE DB DATA
 # Auxiliar to check the FakeDB information. It's only for testing purpose. You should remove it.
 GET			/fakeDB							controllers.Application.fakeDB
+
+
+
+#Hospital RESTfull
+GET                 /api/v1/hospitals                       controllers.HospitalController.findAll(page:Int ?= 1 , size:Int ?= 10, sort: String ?="EMAIL")
+GET                 /api/v1/hospitals/id/:id                controllers.HospitalController.findById(id: String)
+GET                 /api/v1/hospitals/name/:name            controllers.HospitalController.findByName(name:String)
+GET                 /api/v1/hospitals/total                 controllers.HospitalController.getTotalHospital
+POST                /api/v1/hospitals                       controllers.HospitalController.create
+DELETE              /api/v1/hospitals/:id                   controllers.HospitalController.delete(id: String)
+PUT                 /api/v1/hospitals/:id                   controllers.HospitalController.update(id: String)
