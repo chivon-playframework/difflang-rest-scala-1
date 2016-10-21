@@ -8,7 +8,7 @@ import play.api.i18n.MessagesApi
 import play.api.libs.json.Json
 import play.api.mvc._
 import reactivemongo.bson.{ BSONDocument, BSONObjectID }
-import repos.TranslatorRepository
+import repos.TranslatorRepo
 
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -18,7 +18,7 @@ import scala.util.Try
 /**
  * Created by KUYLIM on 10/11/2016.
  */
-class TranslatorController @Inject() (val translatorService: TranslatorRepository, val messagesApi: MessagesApi) extends api.ApiController {
+class TranslatorController @Inject() (val translatorService: TranslatorRepo, val messagesApi: MessagesApi) extends api.ApiController {
 
   // def translatorService = new TranslatorRepoImpl(reactiveMongoApi)
 

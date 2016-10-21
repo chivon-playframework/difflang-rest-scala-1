@@ -50,7 +50,7 @@ GET			/fakeDB							controllers.Application.fakeDB
 
 # Translator RESTfull
 GET                 /api/translators                     controllers.TranslatorController.findAll(sort: String ?="FIRSTNAME", page: Int ?= 1, size: Int ?= 3)
-GET                 /api/translator/:id                  controllers.TranslatorController.findById(id: String)
-POST                /api/translator                      controllers.TranslatorController.create
-DELETE              /api/translator/:id                  controllers.TranslatorController.delete(id: String)
-PUT                 /api/translator/:id                  controllers.TranslatorController.update(id: String)
+GET                 /api/translators/:id                  controllers.TranslatorController.findById(id: String)
+POST                /api/translators                      controllers.TranslatorController.create
+DELETE              /api/translators/:id                  controllers.TranslatorController.delete(id: String)
+PUT                 /api/translators/:id                  controllers.TranslatorController.update(id: String)
