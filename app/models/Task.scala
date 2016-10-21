@@ -98,5 +98,4 @@ object Task {
     case ("done", DESC) => _.done < _.done
     case _ => (_, _) => false
   }
-
 }
