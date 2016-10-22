@@ -46,3 +46,11 @@ GET			/assets/*file				controllers.Assets.versioned(path="/public", file: Asset)
 # SHOW FAKE DB DATA
 # Auxiliar to check the FakeDB information. It's only for testing purpose. You should remove it.
 GET			/fakeDB							controllers.Application.fakeDB
+
+
+# Translator RESTfull
+GET                 /api/translators                     controllers.TranslatorController.findAll(sort: String ?="FIRSTNAME", page: Int ?= 1, size: Int ?= 3)
+GET                 /api/translators/:id                  controllers.TranslatorController.findById(id: String)
+POST                /api/translators                      controllers.TranslatorController.create
+DELETE              /api/translators/:id                  controllers.TranslatorController.delete(id: String)
+PUT                 /api/translators/:id                  controllers.TranslatorController.update(id: String)
