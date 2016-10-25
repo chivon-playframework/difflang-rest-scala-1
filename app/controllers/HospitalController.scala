@@ -10,7 +10,7 @@ import scala.concurrent.duration._
 import models.Hospital
 import api.{ FilterData, Pagination, WrappJson }
 import repos.HospitalRepo
-
+import scala.util.Try
 /**
  * Created by CHHAI CHIVON on 10/21/2016.
  */
@@ -18,7 +18,7 @@ import repos.HospitalRepo
 class HospitalController @Inject() (val hospitalService: HospitalRepo) extends Controller {
 
   //TODO GET ALL HOSPITAL
-  def findAll(page: Int, limit: Int, sort: String) = Action.async {
+  def findAll(sort: String, page: Int, limit: Int) = Action.async {
     implicit request =>
       val sortData = new FilterData(sort)
       val getCount = Await.result(hospitalService.getTotalHospital(), 10 seconds)
@@ -35,7 +35,8 @@ class HospitalController @Inject() (val hospitalService: HospitalRepo) extends C
 
   //TODO GET HOSPITAL BY ID
   def findById(id: String) = Action.async {
-    hospitalService.findHospitalById(BSONDocument("_id" -> BSONObjectID(id))).map(hospital => Ok(Json.toJson(hospital)))
+    val OId: Try[BSONObjectID] = BSONObjectID.parse(id)
+    hospitalService.findHospitalById(BSONDocument("_id" -> OId.get)).map(hospital => Ok(Json.toJson(hospital)))
   }
 
   //TODO GET HOSPITAL BY NAME
@@ -47,14 +48,16 @@ class HospitalController @Inject() (val hospitalService: HospitalRepo) extends C
   def update(id: String) = Action.async(BodyParsers.parse.json) {
     { implicit request =>
       val hospital = (request.body).as[Hospital]
-      val selector = BSONDocument("_id" -> BSONObjectID(id))
+      val OId: Try[BSONObjectID] = BSONObjectID.parse(id)
+      val selector = BSONDocument("_id" -> OId.get)
       hospitalService.updateHospital(selector, hospital).map(result => Accepted)
     }
   }
 
   //TODO DELETE HOSPITAL
   def delete(id: String) = Action.async {
-    hospitalService.deleteHospital(BSONDocument("_id" -> BSONObjectID(id)))
+    val OId: Try[BSONObjectID] = BSONObjectID.parse(id)
+    hospitalService.deleteHospital(BSONDocument("_id" -> OId.get))
       .map(result => Accepted)
   }
 

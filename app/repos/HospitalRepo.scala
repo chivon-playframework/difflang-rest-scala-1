@@ -13,7 +13,6 @@ import models.Hospital
 import reactivemongo.api.commands.WriteResult
 import reactivemongo.bson.BSONDocument
 
-
 /**
  * Created by CHHAI CHIVON
  */

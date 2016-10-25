@@ -50,9 +50,9 @@ GET			/fakeDB							controllers.Application.fakeDB
 
 
 #Hospital RESTfull
-GET                 /api/v1/hospitals                       controllers.HospitalController.findAll(page:Int ?= 1 , size:Int ?= 10, sort: String ?="EMAIL")
-GET                 /api/v1/hospitals/id/:id                controllers.HospitalController.findById(id: String)
-GET                 /api/v1/hospitals/name/:name            controllers.HospitalController.findByName(name:String)
+GET                 /api/v1/hospitals                       controllers.HospitalController.findAll(sort: String ?="EMAIL" ,page:Int ?= 1 , size:Int ?= 10)
+GET                 /api/v1/hospitals/:id                   controllers.HospitalController.findById(id: String)
+GET                 /api/v1/hospitals/:name                 controllers.HospitalController.findByName(name:String)
 GET                 /api/v1/hospitals/total                 controllers.HospitalController.getTotalHospital
 POST                /api/v1/hospitals                       controllers.HospitalController.create
 DELETE              /api/v1/hospitals/:id                   controllers.HospitalController.delete(id: String)
