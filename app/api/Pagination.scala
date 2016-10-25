@@ -12,7 +12,6 @@ class Pagination(page: Int, size: Int, totalCount: Int) extends QueryOpts {
   var Size = size
   var TotalCount = totalCount
   var skip = (page - 1) * size
-
   var totalPage: Int = Math.ceil(TotalCount / size.asInstanceOf[Double]).toInt
 }
 

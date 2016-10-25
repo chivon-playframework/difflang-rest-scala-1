@@ -10,6 +10,7 @@ case class WrappJson(
   pagination: Pagination
 )
 
+//Envelop json
 object WrappJson {
   implicit object jsonWrites extends OWrites[WrappJson] {
     def writes(wrapJson: WrappJson): JsObject = Json.obj(

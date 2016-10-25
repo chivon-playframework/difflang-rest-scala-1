@@ -9,7 +9,8 @@ scalaVersion := "2.11.7"
 scalacOptions ++= Seq("-feature", "-deprecation",
   "-unchecked", "-language:reflectiveCalls",
   "-language:postfixOps",
-  "-language:implicitConversions")
+  "-language:implicitConversions"
+)
 
 // https://github.com/scala/pickling/issues/10
 scalacOptions ++= Seq("-Xmax-classfile-name", "254")
