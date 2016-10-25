@@ -49,7 +49,8 @@ GET			/fakeDB							controllers.Application.fakeDB
 
 
 
-# Translator RESTfull
+# Translator RESTfull api
+
 GET                 /api/translators                     controllers.TranslatorController.findAll(sort: String ?="FIRSTNAME", page: Int ?= 1, size: Int ?= 3)
 GET                 /api/translators/:id                  controllers.TranslatorController.findById(id: String)
 POST                /api/translators                      controllers.TranslatorController.create
