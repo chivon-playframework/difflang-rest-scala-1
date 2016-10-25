@@ -51,13 +51,13 @@ GET			/assets/*file				controllers.Assets.versioned(path="/public", file: Asset)
 GET			/fakeDB							controllers.Application.fakeDB
 
 
-# My user controllers
-GET     /api/user       controllers.UserController.findPaginate(sort: String ?="FIRSTNAME",page:Int ?=1,limit:Int ?=5)
-GET     /api/user       controllers.UserController.index
-GET     /api/user/:id   controllers.UserController.read(id: String)
-POST    /api/user       controllers.UserController.create
-DELETE  /api/user/:id   controllers.UserController.delete(id: String)
-PATCH   /api/user/:id   controllers.UserController.update(id: String)
+# User RESTfull api
+GET                  /api/v1/user       controllers.UserController.findPaginate(sort: String ?="FIRSTNAME",page:Int ?=1,limit:Int ?=5)
+GET                  /api/v1/user       controllers.UserController.index
+GET                  /api/v1/user/:id   controllers.UserController.read(id: String)
+POST                 /api/v1/user       controllers.UserController.create
+DELETE               /api/v1/user/:id   controllers.UserController.delete(id: String)
+PATCH                /api/v1/user/:id   controllers.UserController.update(id: String)
 
 
 
