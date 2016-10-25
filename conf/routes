@@ -5,6 +5,9 @@
 # TEST PAGE
 GET			/test								controllers.Application.test
 
+
+
+
 # AUTHENTICATION
 POST		/signin							controllers.Auth.signIn
 POST		/signout						controllers.Auth.signOut
@@ -46,3 +49,11 @@ GET			/assets/*file				controllers.Assets.versioned(path="/public", file: Asset)
 # SHOW FAKE DB DATA
 # Auxiliar to check the FakeDB information. It's only for testing purpose. You should remove it.
 GET			/fakeDB							controllers.Application.fakeDB
+
+# My test controllers
+GET     /api/user       controllers.UserController.findPaginate(sort: String ?="FIRSTNAME",page:Int ?=1,limit:Int ?=5)
+GET     /api/user       controllers.UserController.index
+GET     /api/user/:id   controllers.UserController.read(id: String)
+POST    /api/user       controllers.UserController.create
+DELETE  /api/user/:id   controllers.UserController.delete(id: String)
+PATCH   /api/user/:id   controllers.UserController.update(id: String)

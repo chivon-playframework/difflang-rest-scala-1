@@ -32,7 +32,7 @@ libraryDependencies ++= Seq(
 	"org.specs2" %% "specs2-matcher-extra" % "3.8.5" % Test,
   "io.swagger" %% "swagger-play2" % "1.5.1",
   "org.webjars" % "swagger-ui" % "2.1.8-M1",
-  "org.reactivemongo" %% "play2-reactivemongo" % "0.12.0-SNAPSHOT",
+  "org.reactivemongo" %% "play2-reactivemongo" % "0.12.0",
   "org.apache.pdfbox" % "pdfbox" % "2.0.2",
   "org.apache.poi" % "poi" % "3.14",
   "com.google.zxing" % "core" % "3.2.1",
