@@ -63,11 +63,11 @@ PATCH   /api/user/:id   controllers.UserController.update(id: String)
 
 # Translator RESTfull api
 
-GET                 /api/translators                     controllers.TranslatorController.findAll(sort: String ?="FIRSTNAME", page: Int ?= 1, size: Int ?= 3)
-GET                 /api/translators/:id                  controllers.TranslatorController.findById(id: String)
-POST                /api/translators                      controllers.TranslatorController.create
-DELETE              /api/translators/:id                  controllers.TranslatorController.delete(id: String)
-PUT                 /api/translators/:id                  controllers.TranslatorController.update(id: String)
+GET                 /api/v1/translators                     controllers.TranslatorController.findAll(sort: String ?="FIRSTNAME", page: Int ?= 1, size: Int ?= 3)
+GET                 /api/v1/translators/:id                  controllers.TranslatorController.findById(id: String)
+POST                /api/v1/translators                      controllers.TranslatorController.create
+DELETE              /api/v1/translators/:id                  controllers.TranslatorController.delete(id: String)
+PUT                 /api/v1/translators/:id                  controllers.TranslatorController.update(id: String)
 
 
 #Hospital RESTfull
