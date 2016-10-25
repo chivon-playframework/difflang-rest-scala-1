@@ -3,7 +3,10 @@ package repos.impl
 import javax.inject.Inject
 
 import api.{ FilterData, Pagination }
+<<<<<<< HEAD:app/repos/impl/TranslatorRepoImpl.scala
 import models.Translator
+=======
+>>>>>>> e44971f0be9561d0183c75b3c61b0edae6e380dc:app/repos/impl/TranslatorRepoImpl.scala
 import play.api.libs.json.{ JsObject, Json }
 import play.modules.reactivemongo.ReactiveMongoApi
 import reactivemongo.api.commands.WriteResult
@@ -11,8 +14,11 @@ import reactivemongo.api.{ QueryOpts, ReadPreference }
 import reactivemongo.bson.BSONDocument
 import reactivemongo.play.json.collection.JSONCollection
 import repos.TranslatorRepo
+<<<<<<< HEAD:app/repos/impl/TranslatorRepoImpl.scala
 import scala.concurrent.ExecutionContext.Implicits.global
 import play.modules.reactivemongo.json._
+=======
+>>>>>>> e44971f0be9561d0183c75b3c61b0edae6e380dc:app/repos/impl/TranslatorRepoImpl.scala
 
 import scala.concurrent.{ ExecutionContext, Future }
 

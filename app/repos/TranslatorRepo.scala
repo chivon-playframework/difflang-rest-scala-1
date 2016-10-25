@@ -11,7 +11,7 @@ import repos.impl.TranslatorRepoImpl
 import scala.concurrent.{ ExecutionContext, Future }
 
 /**
- * Created by nationalist on 9/26/16.
+ * Created by KUYLIM on 10/12/2016.
  */
 @ImplementedBy(classOf[TranslatorRepoImpl])
 trait TranslatorRepo {
@@ -26,4 +26,5 @@ trait TranslatorRepo {
   def save(document: Translator)(implicit ec: ExecutionContext): Future[WriteResult]
 
   def count()(implicit ec: ExecutionContext): Future[Int]
+
 }
