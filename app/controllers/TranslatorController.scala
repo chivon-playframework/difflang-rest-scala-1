@@ -23,25 +23,46 @@ class TranslatorController @Inject() (val translatorService: TranslatorRepo, val
   // def translatorService = new TranslatorRepoImpl(reactiveMongoApi)
 
   // TODO ADD ALL TRANSLATOR
-  def create = Action.async(BodyParsers.parse.json) {
+  /*def create = Action.async(BodyParsers.parse.json) {
     implicit request =>
       val translator = (request.body).as[Translator]
       translatorService.save(translator).map(result => Created)
+  }*/
+
+  def create = SecuredApiActionWithBody {
+    implicit request =>
+      val translator = (request.body).as[Translator]
+      //val translator = readFromRequest[Translator]
+      translatorService.save(translator).flatMap(result => created())
   }
 
+  /* def insert = SecuredApiActionWithBody { implicit request =>
+    readFromRequest[Folder] { folder =>
+      Folder.insert(request.userId, folder.name).flatMap {
+        case (id, newFolder) => created(Api.locationHeader(routes.Folders.info(id)))
+      }
+    }
+  } */
+
   // TODO GET ALL TRANSLATOR
-  def findAll(sort: String, page: Int, size: Int) = Action.async {
+  def findAll(sort: String, page: Int, size: Int) = SecuredApiAction {
     implicit request =>
       val sortData = new FilterData(sort)
       val totalCount = Await.result(translatorService.count(), 10 seconds)
       val pagination = new Pagination(page, size, totalCount)
-      translatorService.find(pagination, sortData).map(translator => Ok(Json.toJson(WrappJson(translator, pagination))))
+      translatorService.find(pagination, sortData).flatMap(translator => ok(Json.toJson(WrappJson(translator, pagination))))
   }
 
-  // TODO FIND TRANSLATOR BY ID
+  /*// TODO FIND TRANSLATOR BY ID
   def findById(id: String) = Action.async {
     val OId: Try[BSONObjectID] = BSONObjectID.parse(id)
     translatorService.select(BSONDocument("_id" -> OId.get)).map(translator => Ok(Json.toJson(translator)))
+  }*/
+  // TODO FIND TRANSLATOR BY ID
+  def findById(id: String) = SecuredApiAction {
+    implicit request =>
+      val OId: Try[BSONObjectID] = BSONObjectID.parse(id)
+      translatorService.select(BSONDocument("_id" -> OId.get)).flatMap(translator => ok(Json.toJson(translator)))
   }
 
   // TODO UPDATE TRANSLATOR
@@ -61,4 +82,5 @@ class TranslatorController @Inject() (val translatorService: TranslatorRepo, val
     translatorService.remove(BSONDocument("_id" -> OId.get))
       .map(result => Accepted)
   }
+
 }

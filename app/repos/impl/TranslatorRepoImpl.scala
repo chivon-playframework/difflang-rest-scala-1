@@ -38,10 +38,9 @@ class TranslatorRepoImpl @Inject() (reactiveMongoApi: ReactiveMongoApi) extends 
       collection.flatMap(_.remove(id))
     }
 
-  override def select(id: BSONDocument)(implicit ec: ExecutionContext): Future[Option[JsObject]] =
-    {
-      collection.flatMap(_.find(id).one[JsObject])
-    }
+  override def select(id: BSONDocument)(implicit ec: ExecutionContext): Future[Option[JsObject]] = {
+    collection.flatMap(_.find(id).one[JsObject])
+  }
 
   override def save(document: Translator)(implicit ec: ExecutionContext): Future[WriteResult] = {
     collection.flatMap(_.insert(document))
