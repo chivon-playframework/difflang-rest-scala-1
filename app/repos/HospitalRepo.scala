@@ -22,6 +22,7 @@ trait HospitalRepo {
   def list(pagination: Pagination, sort: FilterData)(implicit ec: ExecutionContext): Future[List[JsObject]]
   def findHospitalById(id: String)(implicit ec: ExecutionContext): Future[Option[JsObject]]
   def findHospitalByName(name: String)(implicit ec: ExecutionContext): Future[List[JsObject]]
+  def findHospitalByEmail(email: String)(implicit ec: ExecutionContext): Future[List[JsObject]]
   def addHospital(hospital: Hospital)(implicit ec: ExecutionContext): Future[WriteResult]
   def deleteHospital(id: String)(implicit ec: ExecutionContext): Future[WriteResult]
   def updateHospital(id: String, update: Hospital)(implicit ec: ExecutionContext): Future[WriteResult]

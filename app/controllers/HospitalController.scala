@@ -42,6 +42,12 @@ class HospitalController @Inject() (val hospitalService: HospitalRepo)(val messa
       hospitalService.findHospitalById(id).flatMap(hospital => ok(Json.toJson(hospital)))
   }
 
+  //TODO GET HOSPITAL BY EMIAL
+  def findByEmail(email: String) = SecuredApiAction {
+    implicit request =>
+      hospitalService.findHospitalByEmail(email).flatMap(hospital => ok(Json.toJson(hospital)))
+  }
+
   //TODO GET HOSPITAL BY NAME
   def findByName(name: String) = SecuredApiAction {
     implicit request =>

@@ -16,13 +16,13 @@ case class Mobile(
 object Mobile {
   implicit object MobileWriter extends OWrites[Mobile] {
     def writes(mobile: Mobile): JsObject = Json.obj(
-      "PHONE" -> mobile.phone
+      "phone" -> mobile.phone
     )
   }
   implicit object MobileReade extends Reads[Mobile] {
     override def reads(json: JsValue): JsResult[Mobile] = json match {
       case obj: JsObject => try {
-        val phone = (obj \ "PHONE").as[String]
+        val phone = (obj \ "phone").as[String]
         JsSuccess(Mobile(phone))
       } catch {
         case cause: Throwable => JsError(cause.getMessage)
@@ -48,30 +48,30 @@ object Hospital {
   //TODO Implicit Write Object
   implicit object HospitalWrites extends OWrites[Hospital] {
     def writes(hospital: Hospital): JsObject = Json.obj(
-      "NAME" -> hospital.name,
-      "EMAIL" -> hospital.email,
-      "MOBILE" -> hospital.mobile,
-      "ADDRESS" -> hospital.address,
-      "ZIPCODE" -> hospital.zipcode,
-      "STATE" -> hospital.state,
-      "WEBSITE" -> hospital.website,
-      "HOSTYPE" -> hospital.hostype,
-      "DISCRIPTION" -> hospital.discription
+      "name" -> hospital.name,
+      "email" -> hospital.email,
+      "mobile" -> hospital.mobile,
+      "address" -> hospital.address,
+      "zip" -> hospital.zipcode,
+      "state" -> hospital.state,
+      "website" -> hospital.website,
+      "hospital_type" -> hospital.hostype,
+      "discription" -> hospital.discription
     )
   }
   //TODO Implicit Read Object
   implicit object HospitalReads extends Reads[Hospital] {
     def reads(json: JsValue): JsResult[Hospital] = json match {
       case obj: JsObject => try {
-        val name = (obj \ "NAME").as[String]
-        val email = (obj \ "EMAIL").as[String]
-        val phone = (obj \ "MOBILE").as[ListBuffer[Mobile]]
-        val address = (obj \ "ADDRESS").as[String]
-        val zipcode = (obj \ "ZIPCODE").as[String]
-        val state = (obj \ "STATE").as[String]
-        val website = (obj \ "WEBSITE").as[String]
-        val hostype = (obj \ "HOSTYPE").as[String]
-        val discription = (obj \ "DISCRIPTION").as[String]
+        val name = (obj \ "name").as[String]
+        val email = (obj \ "email").as[String]
+        val phone = (obj \ "mobile").as[ListBuffer[Mobile]]
+        val address = (obj \ "address").as[String]
+        val zipcode = (obj \ "zip").as[String]
+        val state = (obj \ "state").as[String]
+        val website = (obj \ "website").as[String]
+        val hostype = (obj \ "hospital_type").as[String]
+        val discription = (obj \ "discription").as[String]
         JsSuccess(Hospital(name, email, phone, address, zipcode, state, website, hostype, discription))
       } catch {
         case cause: Throwable => JsError(cause.getMessage)
