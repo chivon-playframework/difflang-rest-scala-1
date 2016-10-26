@@ -15,30 +15,37 @@ import scala.concurrent.duration._
  */
 class UserController @Inject() (val userService: UserRepository, val messagesApi: MessagesApi) extends api.ApiController {
 
+  // TODO INSERT USER
   def create = SecuredApiActionWithBody { implicit request =>
     val user = (request.body).as[User1]
     userService.save(user).flatMap(result => created())
   }
-
+  // TODO SELECT BY ID
   def findById(id: String) = SecuredApiAction { implicit request =>
-    userService.select(id).flatMap(translator => ok(Json.toJson(translator)))
+    userService.select(id).flatMap(user => ok(Json.toJson(user)))
   }
 
+  // TODO UPDATE BY ID
   def update(id: String) = SecuredApiActionWithBody {
     implicit request =>
       val user = (request.body).as[User1]
       userService.update(id, user).flatMap(result => accepted())
   }
 
+  // TODO DELETE BY ID
   def delete(id: String) = SecuredApiAction { implicit request =>
     userService.remove(id).flatMap(_ => noContent())
   }
-
+  // TODO FIND ALL USERS
   def findAll(sort: String, page: Int, limit: Int) = SecuredApiAction { implicit request =>
     val sortData = new FilterData(sort)
     val number1 = Await.result(userService.count(), 10 seconds)
     val pagination = new Pagination(page, limit, number1)
     userService.findAll(pagination, sortData).flatMap(users => ok(Json.toJson(WrappJson(users, pagination))))
+  }
+
+  def findByEmail(email: String) = SecuredApiAction { implicit request =>
+    userService.findByEmail(email).flatMap(user => ok(Json.toJson(user)))
   }
 
 }
