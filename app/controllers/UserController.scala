@@ -22,7 +22,7 @@ class UserController @Inject() (val userService: UserRepository, val messagesApi
   }
   // TODO SELECT BY ID
   def findById(id: String) = SecuredApiAction { implicit request =>
-    userService.select(id).flatMap(translator => ok(Json.toJson(translator)))
+    userService.select(id).flatMap(user => ok(Json.toJson(user)))
   }
 
   // TODO UPDATE BY ID
@@ -42,6 +42,10 @@ class UserController @Inject() (val userService: UserRepository, val messagesApi
     val number1 = Await.result(userService.count(), 10 seconds)
     val pagination = new Pagination(page, limit, number1)
     userService.findAll(pagination, sortData).flatMap(users => ok(Json.toJson(WrappJson(users, pagination))))
+  }
+
+  def findByEmail(email: String) = SecuredApiAction { implicit request =>
+    userService.findByEmail(email).flatMap(user => ok(Json.toJson(user)))
   }
 
 }

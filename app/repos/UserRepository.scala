@@ -25,4 +25,6 @@ trait UserRepository {
   def findAll(pagination: Pagination, fiterData: FilterData)(implicit ec: ExecutionContext): Future[List[JsObject]]
 
   def count()(implicit ec: ExecutionContext): Future[Int]
+
+  def findByEmail(email: String)(implicit ec: ExecutionContext): Future[Option[JsObject]]
 }
