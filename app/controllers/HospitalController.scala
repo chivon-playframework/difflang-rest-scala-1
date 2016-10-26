@@ -39,8 +39,7 @@ class HospitalController @Inject() (val hospitalService: HospitalRepo)(val messa
   //TODO GET HOSPITAL BY ID
   def findById(id: String) = SecuredApiAction {
     implicit request =>
-      val OId: Try[BSONObjectID] = BSONObjectID.parse(id)
-      hospitalService.findHospitalById(BSONDocument("_id" -> OId.get)).flatMap(hospital => ok(Json.toJson(hospital)))
+      hospitalService.findHospitalById(id).flatMap(hospital => ok(Json.toJson(hospital)))
   }
 
   //TODO GET HOSPITAL BY NAME
@@ -54,17 +53,14 @@ class HospitalController @Inject() (val hospitalService: HospitalRepo)(val messa
     {
       implicit request =>
         val hospital = (request.body).as[Hospital]
-        val OId: Try[BSONObjectID] = BSONObjectID.parse(id)
-        val selector = BSONDocument("_id" -> OId.get)
-        hospitalService.updateHospital(selector, hospital).flatMap(result => accepted())
+        hospitalService.updateHospital(id, hospital).flatMap(result => accepted())
     }
   }
 
   //TODO DELETE HOSPITAL
   def delete(id: String) = SecuredApiAction {
     implicit request =>
-      val OId: Try[BSONObjectID] = BSONObjectID.parse(id)
-      hospitalService.deleteHospital(BSONDocument("_id" -> OId.get)).flatMap(result => accepted())
+      hospitalService.deleteHospital(id).flatMap(_ => noContent())
   }
 
   //TODO GET TOTAL HOSPITAL
