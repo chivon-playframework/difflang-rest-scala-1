@@ -66,7 +66,6 @@ PATCH                /api/v1/users/:id                      controllers.UserCont
 GET                 /api/v1/translators                      controllers.TranslatorController.findAll(sort: String ?="FIRSTNAME", page: Int ?= 1, size: Int ?= 3)
 GET                 /api/v1/translators/:id                  controllers.TranslatorController.findById(id: String)
 POST                /api/v1/translators                      controllers.TranslatorController.create
-GET			/folders/:id				controllers.Folders.info(id: Long)
 DELETE              /api/v1/translators/:id                  controllers.TranslatorController.delete(id: String)
 PUT                 /api/v1/translators/:id                  controllers.TranslatorController.update(id: String)
 
