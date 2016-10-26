@@ -30,10 +30,10 @@ class HospitalController @Inject() (val hospitalService: HospitalRepo)(val messa
   }
 
   //TODO ADD HOSPITAL
-  def create = Action.async(BodyParsers.parse.json) {
+  def create = SecuredApiActionWithBody {
     implicit request =>
       val hospital = (request.body).as[Hospital]
-      hospitalService.addHospital(hospital).map(result => Created)
+      hospitalService.addHospital(hospital).flatMap(result => created())
   }
 
   //TODO GET HOSPITAL BY ID
@@ -50,26 +50,27 @@ class HospitalController @Inject() (val hospitalService: HospitalRepo)(val messa
   }
 
   //TODO UPDATE HOSPITAL
-  def update(id: String) = Action.async(BodyParsers.parse.json) {
+  def update(id: String) = SecuredApiActionWithBody {
     {
       implicit request =>
         val hospital = (request.body).as[Hospital]
         val OId: Try[BSONObjectID] = BSONObjectID.parse(id)
         val selector = BSONDocument("_id" -> OId.get)
-        hospitalService.updateHospital(selector, hospital).map(result => Accepted)
+        hospitalService.updateHospital(selector, hospital).flatMap(result => accepted())
     }
   }
 
   //TODO DELETE HOSPITAL
-  def delete(id: String) = Action.async {
-    val OId: Try[BSONObjectID] = BSONObjectID.parse(id)
-    hospitalService.deleteHospital(BSONDocument("_id" -> OId.get))
-      .map(result => Accepted)
+  def delete(id: String) = SecuredApiAction {
+    implicit request =>
+      val OId: Try[BSONObjectID] = BSONObjectID.parse(id)
+      hospitalService.deleteHospital(BSONDocument("_id" -> OId.get)).flatMap(result => accepted())
   }
 
   //TODO GET TOTAL HOSPITAL
-  def getTotalHospital = Action.async {
-    hospitalService.getTotalHospital().map(result => Ok("Total :" + result.toString))
+  def getTotalHospital = SecuredApiAction {
+    implicit request =>
+      hospitalService.getTotalHospital().flatMap(result => ok("Total :" + result.toString))
   }
 
 }
