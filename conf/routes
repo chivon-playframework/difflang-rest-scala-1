@@ -52,9 +52,8 @@ GET			/fakeDB							controllers.Application.fakeDB
 
 
 # User RESTfull api
-GET                  /api/v1/users                          controllers.UserController.findPaginate(sort: String ?="FIRSTNAME",page:Int ?=1,limit:Int ?=5)
-GET                  /api/v1/users                          controllers.UserController.index
-GET                  /api/v1/users/:id                      controllers.UserController.read(id: String)
+GET                  /api/v1/users                          controllers.UserController.findAll(sort: String ?="FIRSTNAME",page:Int ?=1,limit:Int ?=2)
+GET                  /api/v1/users/:id                      controllers.UserController.findById(id: String)
 POST                 /api/v1/users                          controllers.UserController.create
 DELETE               /api/v1/users/:id                      controllers.UserController.delete(id: String)
 PATCH                /api/v1/users/:id                      controllers.UserController.update(id: String)
