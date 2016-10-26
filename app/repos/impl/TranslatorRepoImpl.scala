@@ -6,13 +6,14 @@ import api.{ FilterData, Pagination }
 import models.Translator
 import play.api.libs.json.{ JsObject, Json }
 import play.modules.reactivemongo.ReactiveMongoApi
+import play.modules.reactivemongo.json._
 import reactivemongo.api.commands.WriteResult
 import reactivemongo.api.{ QueryOpts, ReadPreference }
-import reactivemongo.bson.BSONDocument
 import reactivemongo.play.json.collection.JSONCollection
 import repos.TranslatorRepo
+import utils.BSONObjectIDConverter
+
 import scala.concurrent.ExecutionContext.Implicits.global
-import play.modules.reactivemongo.json._
 import scala.concurrent.{ ExecutionContext, Future }
 
 /**
@@ -28,18 +29,19 @@ class TranslatorRepoImpl @Inject() (reactiveMongoApi: ReactiveMongoApi) extends 
     cursor.flatMap(_.collect[List](pagination.Size))
   }
 
-  override def update(id: BSONDocument, update: Translator)(implicit ec: ExecutionContext): Future[WriteResult] =
+  override def update(id: String, update: Translator)(implicit ec: ExecutionContext): Future[WriteResult] =
     {
-      collection.flatMap(_.update(id, update))
+      collection.flatMap(_.update(BSONObjectIDConverter(id).selector, update))
     }
 
-  override def remove(id: BSONDocument)(implicit ec: ExecutionContext): Future[WriteResult] =
+  override def remove(id: String)(implicit ec: ExecutionContext): Future[WriteResult] =
     {
-      collection.flatMap(_.remove(id))
+      collection.flatMap(_.remove(BSONObjectIDConverter(id).selector))
     }
 
-  override def select(id: BSONDocument)(implicit ec: ExecutionContext): Future[Option[JsObject]] = {
-    collection.flatMap(_.find(id).one[JsObject])
+  override def select(id: String)(implicit ec: ExecutionContext): Future[Option[JsObject]] = {
+
+    collection.flatMap(_.find(BSONObjectIDConverter(id).selector).one[JsObject])
   }
 
   override def save(document: Translator)(implicit ec: ExecutionContext): Future[WriteResult] = {
