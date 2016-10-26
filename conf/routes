@@ -79,3 +79,5 @@ DELETE              /api/v1/hospitals/:id                   controllers.Hospital
 PUT                 /api/v1/hospitals/:id                   controllers.HospitalController.update(id: String)
 
 
+
+
