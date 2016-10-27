@@ -15,7 +15,7 @@ case class ApiToken(
     token: String, // UUID 36 digits
     apiKey: String,
     expirationTime: DateTime,
-    userId: String // userId should be chang to long if using with relational database
+    userId: String  // userId should be chang to long if using with relational database
 ) {
   def isExpired = expirationTime.isBeforeNow
 }

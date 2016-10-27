@@ -1,9 +1,9 @@
-package models
+package com.difflang.models
 
 import play.api.libs.json.Json
 import reactivemongo.bson.BSONObjectID
 import play.modules.reactivemongo.json._
-//
+
 /**
  * Created by Thanak on 10/11/2016.
  */
