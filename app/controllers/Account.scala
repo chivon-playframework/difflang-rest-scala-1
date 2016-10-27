@@ -12,7 +12,7 @@ import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
 class Account @Inject() (val messagesApi: MessagesApi) extends api.ApiController {
-
+  /*
   def info = SecuredApiAction { implicit request =>
     maybeItem(User.findById(request.userId))
   }
@@ -50,5 +50,6 @@ class Account @Inject() (val messagesApi: MessagesApi) extends api.ApiController
       }
     }
   }
+  */
 
 }

@@ -1,6 +1,5 @@
 package com.difflang.models
 
-
 /**
  * Created by Thanak on 10/11/2016.
  */

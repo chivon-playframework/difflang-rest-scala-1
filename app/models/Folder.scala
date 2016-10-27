@@ -12,7 +12,7 @@ case class Folder(
   order: Int,
   name: String
 )
-
+/*
 object Folder {
   import FakeDB.folders
 
@@ -82,4 +82,4 @@ object Folder {
     case _ => (_, _) => false
   }
 
-}
+}*/

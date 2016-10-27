@@ -11,7 +11,7 @@ import javax.inject.Inject
 import play.api.i18n.{ MessagesApi }
 
 class Folders @Inject() (val messagesApi: MessagesApi) extends api.ApiController {
-
+  /*
   def list(sort: Option[String], p: Int, s: Int) = SecuredApiAction { implicit request =>
     sortedPage(sort, Folder.sortingFields, default = "order") { sortingFields =>
       Folder.page(request.userId, sortingFields, p, s)
@@ -50,5 +50,5 @@ class Folders @Inject() (val messagesApi: MessagesApi) extends api.ApiController
       noContent()
     }
   }
-
+*/
 }
