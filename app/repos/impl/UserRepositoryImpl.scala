@@ -49,8 +49,8 @@ class UserRepositoryImpl @Inject() (reactiveMongoApi: ReactiveMongoApi) extends 
     collection.flatMap(_.count())
   }
 
-  override def findByEmail2(email: String)(implicit ec: ExecutionContext): Future[Option[JsObject]] = {
-    collection.flatMap(_.find(Json.obj("email" -> email)).one[JsObject])
+  override def findByEmail2(email: String)(implicit ec: ExecutionContext): Future[Option[User1]] = {
+    collection.flatMap(_.find(Json.obj("email" -> email)).one[User1])
   }
 
 }

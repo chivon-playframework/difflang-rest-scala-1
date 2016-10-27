@@ -1,5 +1,5 @@
 package models
-
+import play.modules.reactivemongo.json._
 import play.api.libs.json._
 
 /**
@@ -10,25 +10,5 @@ case class TranslateExpertise(
 )
 
 object TranslateExpertise {
-
-  implicit object LanguageWrites extends OWrites[TranslateExpertise] {
-    def writes(exp: TranslateExpertise): JsObject = Json.obj(
-      "expert" -> exp.tranExpert
-    )
-  }
-
-  implicit object LanguageReads extends Reads[TranslateExpertise] {
-    def reads(json: JsValue): JsResult[TranslateExpertise] = json match {
-      case obj: JsObject => try {
-
-        val exp = (obj \ "expert").as[String]
-        JsSuccess(TranslateExpertise(exp))
-
-      } catch {
-        case cause: Throwable => JsError(cause.getMessage)
-      }
-      case _ => JsError("expected.jsobject")
-    }
-  }
-
+  implicit val translateExpertiseFormat = Json.format[TranslateExpertise]
 }
