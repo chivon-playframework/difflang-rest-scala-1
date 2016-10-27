@@ -30,20 +30,20 @@ object Translator {
   implicit object TranslatorWrite extends OWrites[Translator] {
     def writes(translator: Translator): JsObject = Json.obj(
 
-      "FIRSTNAME" -> translator.firstname,
-      "LASTNAME" -> translator.lastname,
-      "COMPANYNAME" -> translator.companyName,
-      "EMAIL" -> translator.email,
-      "PHONE" -> translator.phone,
-      "ADDRESS" -> translator.address,
-      "STATE" -> translator.state,
-      "ZIPCODE" -> translator.zipcode,
-      "TARGETLANGUAGE" -> (translator.targetLanguage),
-      "NATIVELANGUAGE" -> translator.nativeLanguage,
-      "OFFICALDEGREE" -> translator.officialDegree,
-      "TRANSLATESINCE" -> translator.translateSince,
-      "SERVICETRANSLATE" -> Json.arr(translator.serviceTranslate),
-      "TRANSLATEEXPRETISE" -> Json.arr(translator.translateExpertise)
+      "firstname" -> translator.firstname,
+      "lastname" -> translator.lastname,
+      "company_name" -> translator.companyName,
+      "email" -> translator.email,
+      "phone" -> translator.phone,
+      "address" -> translator.address,
+      "state" -> translator.state,
+      "zipcode" -> translator.zipcode,
+      "target_language" -> (translator.targetLanguage),
+      "native_language" -> translator.nativeLanguage,
+      "official_degree" -> translator.officialDegree,
+      "translate_since" -> translator.translateSince,
+      "service_translate" -> Json.arr(translator.serviceTranslate),
+      "translate_expertise" -> Json.arr(translator.translateExpertise)
     )
   }
 
@@ -51,20 +51,20 @@ object Translator {
     def reads(json: JsValue): JsResult[Translator] = json match {
       case obj: JsObject => try {
 
-        val firstname = (obj \ "FIRSTNAME").as[String]
-        val lastname = (obj \ "LASTNAME").as[String]
-        val companyName = (obj \ "COMPANYNAME").as[String]
-        val email = (obj \ "EMAIL").as[String]
-        val phone = (obj \ "PHONE").as[String]
-        val address = (obj \ "ADDRESS").as[String]
-        val state = (obj \ "STATE").as[String]
-        val zipcode = (obj \ "ZIPCODE").as[String]
-        val targetLanguage = (obj \ "TARGETLANGUAGE").as[ListBuffer[Language]]
-        val nativeLanguage = (obj \ "NATIVELANGUAGE").as[String]
-        val officialDegree = (obj \ "OFFICALDEGREE").as[Boolean]
-        val translateSince = (obj \ "TRANSLATESINCE").as[Int]
-        val serviceTranslate = (obj \ "SERVICETRANSLATE").as[ListBuffer[ServiceTranslate]]
-        val translateExpertise = (obj \ "TRANSLATEEXPRETISE").as[ListBuffer[TranslateExpertise]]
+        val firstname = (obj \ "firstname").as[String]
+        val lastname = (obj \ "lastname").as[String]
+        val companyName = (obj \ "company_name").as[String]
+        val email = (obj \ "email").as[String]
+        val phone = (obj \ "phone").as[String]
+        val address = (obj \ "address").as[String]
+        val state = (obj \ "state").as[String]
+        val zipcode = (obj \ "zipcode").as[String]
+        val targetLanguage = (obj \ "target_language").as[ListBuffer[Language]]
+        val nativeLanguage = (obj \ "native_language").as[String]
+        val officialDegree = (obj \ "official_degree").as[Boolean]
+        val translateSince = (obj \ "translate_since").as[Int]
+        val serviceTranslate = (obj \ "service_translate").as[ListBuffer[ServiceTranslate]]
+        val translateExpertise = (obj \ "translate_expertise").as[ListBuffer[TranslateExpertise]]
         JsSuccess(Translator(firstname, lastname, companyName, email, phone, address, state, zipcode, targetLanguage, nativeLanguage, officialDegree, translateSince, serviceTranslate, translateExpertise))
       } catch {
         case cause: Throwable => JsError(cause.getMessage)

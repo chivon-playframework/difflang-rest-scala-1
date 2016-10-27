@@ -13,7 +13,7 @@ object TranslateExpertise {
 
   implicit object LanguageWrites extends OWrites[TranslateExpertise] {
     def writes(exp: TranslateExpertise): JsObject = Json.obj(
-      "EXPERT" -> exp.tranExpert
+      "expert" -> exp.tranExpert
     )
   }
 
@@ -21,7 +21,7 @@ object TranslateExpertise {
     def reads(json: JsValue): JsResult[TranslateExpertise] = json match {
       case obj: JsObject => try {
 
-        val exp = (obj \ "EXPERT").as[String]
+        val exp = (obj \ "expert").as[String]
         JsSuccess(TranslateExpertise(exp))
 
       } catch {

@@ -20,14 +20,16 @@ import com.difflang.models.User1
 import play.api.i18n.MessagesApi
 import repos.UserRepository
 
-class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userService: UserRepository) extends api.ApiController {
+
+class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userRepo: UserRepository) extends api.ApiController {
+
 
   implicit val loginInfoReads: Reads[Tuple2[String, String]] = (
     (__ \ "email").read[String](Reads.email) and
       (__ \ "password").read[String] tupled
   )
 
-  def signIn = ApiActionWithBody { implicit request =>
+  def signIn() = ApiActionWithBody { implicit request =>
     readFromRequest[Tuple2[String, String]] {
       case (email, pwd) =>
         User.findByEmail(email).flatMap {

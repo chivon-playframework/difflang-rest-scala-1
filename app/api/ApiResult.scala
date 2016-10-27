@@ -1,13 +1,13 @@
 package api
 
-import ApiResponse._
-import ApiError._
+import api.ApiError._
+import api.ApiResponse._
 import models.ApiLog
-import play.api.mvc.Results._
-import play.api.mvc.{ Result, RequestHeader }
-import play.api.libs.json._
-import play.api.libs.json.Json._
 import play.api.i18n.Lang
+import play.api.libs.json.Json._
+import play.api.libs.json._
+import play.api.mvc.Results._
+import play.api.mvc.{ RequestHeader, Result }
 
 /*
 * The result of an ApiRequest.
@@ -30,6 +30,7 @@ trait ApiResult {
 	*/
   def envelopedJson(implicit lang: Lang): JsValue = Json.obj(
     "data" -> json,
+    "pagination" -> makePagination.makePagination(),
     "status" -> status,
     "headers" -> JsObject((headers ++ Api.basicHeaders).map(h => h._1 -> JsString(h._2)))
   )

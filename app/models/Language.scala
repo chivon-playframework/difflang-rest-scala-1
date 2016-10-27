@@ -13,7 +13,7 @@ object Language {
 
   implicit object LanguageWrites extends OWrites[Language] {
     def writes(lang: Language): JsObject = Json.obj(
-      "LANGUAGE" -> lang.language
+      "language" -> lang.language
     )
   }
 
@@ -21,7 +21,7 @@ object Language {
     def reads(json: JsValue): JsResult[Language] = json match {
       case obj: JsObject => try {
 
-        val lang = (obj \ "LANGUAGE").as[String]
+        val lang = (obj \ "language").as[String]
         JsSuccess(Language(lang))
 
       } catch {

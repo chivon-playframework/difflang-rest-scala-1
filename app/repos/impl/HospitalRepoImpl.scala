@@ -40,7 +40,14 @@ class HospitalRepoImpl @Inject() (reactiveMongoApi: ReactiveMongoApi) extends Ho
 
   //TODO FIND HOSPITAL BY NAME
   override def findHospitalByName(name: String)(implicit ec: ExecutionContext): Future[List[JsObject]] = {
-    val genericQueryBuilder = collection.map(_.find(Json.obj("NAME" -> name)))
+    val genericQueryBuilder = collection.map(_.find(Json.obj("name" -> name)))
+    val cursor = genericQueryBuilder.map(_.cursor[JsObject](ReadPreference.Primary))
+    cursor.flatMap(_.collect[List]())
+  }
+
+  //TODO FIND HOSPITAL BY NAME
+  override def findHospitalByEmail(email: String)(implicit ec: ExecutionContext): Future[List[JsObject]] = {
+    val genericQueryBuilder = collection.map(_.find(Json.obj("email" -> email)))
     val cursor = genericQueryBuilder.map(_.cursor[JsObject](ReadPreference.Primary))
     cursor.flatMap(_.collect[List]())
   }

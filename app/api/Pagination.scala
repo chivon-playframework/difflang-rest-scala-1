@@ -13,15 +13,24 @@ class Pagination(page: Int, size: Int, totalCount: Int) extends QueryOpts {
   var TotalCount = totalCount
   var skip = (page - 1) * size
   var totalPage: Int = Math.ceil(TotalCount / size.asInstanceOf[Double]).toInt
+
+  makePagination.page = Page
+  makePagination.size = Size
+  makePagination.totalCount = TotalCount
+  makePagination.totalPage = totalPage
 }
 
-object Pagination {
-  implicit object PaginationWrites extends OWrites[Pagination] {
-    def writes(pagination: Pagination): JsObject = Json.obj(
-      "PAGE" -> pagination.Page,
-      "SIZE" -> pagination.Size,
-      "TOTAL_COUNT" -> pagination.TotalCount,
-      "TOTAL_PAGE" -> pagination.totalPage
-    )
-  }
+object makePagination {
+  var page = 0
+  var size = 0
+  var totalCount = 0
+  var totalPage = 0
+
+  def makePagination(): JsObject = Json.obj(
+    "page" -> page,
+    "size" -> size,
+    "total_count" -> totalCount,
+    "total_pages" -> totalPage
+  )
 }
+
