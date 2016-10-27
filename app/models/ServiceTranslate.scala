@@ -1,5 +1,5 @@
 package models
-
+import play.modules.reactivemongo.json._
 import play.api.libs.json._
 
 /**
@@ -10,25 +10,5 @@ case class ServiceTranslate(
 )
 
 object ServiceTranslate {
-
-  implicit object LanguageWrites extends OWrites[ServiceTranslate] {
-    def writes(serviceTran: ServiceTranslate): JsObject = Json.obj(
-      "service" -> serviceTran.serviceTranslate
-    )
-  }
-
-  implicit object LanguageReads extends Reads[ServiceTranslate] {
-    def reads(json: JsValue): JsResult[ServiceTranslate] = json match {
-      case obj: JsObject => try {
-
-        val serviceTran = (obj \ "service").as[String]
-        JsSuccess(ServiceTranslate(serviceTran))
-
-      } catch {
-        case cause: Throwable => JsError(cause.getMessage)
-      }
-      case _ => JsError("expected.jsobject")
-    }
-  }
-
+  implicit val serviceFormat = Json.format[ServiceTranslate]
 }

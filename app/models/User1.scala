@@ -1,6 +1,6 @@
 package com.difflang.models
 
-import play.api.libs.json._
+import play.api.libs.json.Json
 import reactivemongo.bson.BSONObjectID
 import play.modules.reactivemongo.json._
 

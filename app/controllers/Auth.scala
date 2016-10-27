@@ -1,21 +1,15 @@
 package controllers
 
 import api.ApiError._
-import api.JsonCombinators._
-import models.{ ApiToken, User }
-import play.api.mvc._
-import play.api.libs.json._
-import play.api.libs.functional.syntax._
-import play.api.Play.current
+import models.{ ApiToken}
 import akka.actor.ActorSystem
-
-import scala.concurrent.{ Await, Future }
-import scala.concurrent.ExecutionContext.Implicits.global
 import javax.inject.Inject
-
 import com.difflang.models.User1
 import play.api.i18n.MessagesApi
+import play.api.libs.functional.syntax._
+import play.api.libs.json._
 import repos.UserRepository
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userRepo: UserRepository) extends api.ApiController {
 
@@ -24,7 +18,7 @@ class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userRep
       (__ \ "password").read[String] tupled
   )
 
-  def signIn() = ApiActionWithBody { implicit request =>
+  /*def signIn() = ApiActionWithBody { implicit request =>
     readFromRequest[Tuple2[String, String]] {
       case (email, pwd) =>
         User.findByEmail(email).flatMap {
@@ -34,6 +28,27 @@ class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userRep
             else if (!user.emailConfirmed) errorUserEmailUnconfirmed
             else if (!user.active) errorUserInactive
             else ApiToken.create(request.apiKeyOpt.get, user.id).flatMap { token =>
+              ok(Json.obj(
+                "token" -> token,
+                "minutes" -> 10
+              ))
+            }
+          }
+        }
+    }
+  }  */
+
+  def signIn() = ApiActionWithBody { implicit request =>
+    readFromRequest[Tuple2[String, String]] {
+      case (email, pwd) =>
+        userRepo.findByEmail(email).flatMap {
+          case None => errorUserNotFound
+          case Some(user) => {
+            if (user.password != pwd) errorUserNotFound
+            else if (!user.confirm_email) errorUserEmailUnconfirmed
+            else if (!user.active) errorUserInactive
+            // userId should be chang to long if using with relational database
+            else ApiToken.create(request.apiKeyOpt.get, user.id.toString).flatMap { token =>
               ok(Json.obj(
                 "token" -> token,
                 "minutes" -> 10
