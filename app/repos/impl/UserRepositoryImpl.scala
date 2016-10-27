@@ -3,7 +3,6 @@ package repos.impl
 import javax.inject.Inject
 
 import api.{ FilterData, Pagination }
-import com.difflang.models.User1
 import play.api.libs.json.{ JsObject, Json }
 import play.modules.reactivemongo.ReactiveMongoApi
 import play.modules.reactivemongo.json._
@@ -49,7 +48,4 @@ class UserRepositoryImpl @Inject() (reactiveMongoApi: ReactiveMongoApi) extends 
     collection.flatMap(_.count())
   }
 
-  override def findByEmail(email: String)(implicit ec: ExecutionContext): Future[Option[User1]] = {
-    collection.flatMap(_.find(Json.obj("email" -> email)).one[User1])
-  }
 }

@@ -4,7 +4,6 @@ import api.ApiError._
 import models.{ ApiToken }
 import akka.actor.ActorSystem
 import javax.inject.Inject
-import com.difflang.models.User1
 import play.api.i18n.MessagesApi
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
@@ -21,7 +20,7 @@ class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userRep
   /*def signIn() = ApiActionWithBody { implicit request =>
     readFromRequest[Tuple2[String, String]] {
       case (email, pwd) =>
-        User.findByEmail(email).flatMap {
+        userRepo.findByEmail2(email).flatMap {
           case None => errorUserNotFound
           case Some(user) => {
             if (user.password != pwd) errorUserNotFound
@@ -71,26 +70,6 @@ class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userRep
       (__ \ "user").read[User1] tupled
   )
 
-  /* def signUp = ApiActionWithBody { implicit request =>
-    readFromRequest[Tuple3[String, String, User]] {
-      case (email, password, user) =>
-        User.findByEmail(email).flatMap {
-          case Some(anotherUser) => errorCustom("api.error.signup.email.exists")
-          case None => User.insert(email, password, user.name).flatMap {
-            case (id, user) =>
-
-              // Send confirmation email. You will have to catch the link and confirm the email and activate the user.
-              // But meanwhile...
-              system.scheduler.scheduleOnce(30 seconds) {
-                User.confirmEmail(id)
-              }
-
-              ok(user)
-          }
-        }
-    }
-  }*/
-
   def signUp = ApiActionWithBody { implicit request =>
     readFromRequest[Tuple3[String, String, User1]] {
       case (email, password, user1) =>
@@ -105,3 +84,4 @@ class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userRep
   }
 
 }
+

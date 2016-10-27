@@ -2,6 +2,8 @@ package models
 
 import api.Page
 import java.text.SimpleDateFormat
+import com.stripe.model.FraudDetails
+
 import scala.collection.mutable.Map
 
 /*
@@ -27,7 +29,8 @@ object FakeDB {
   val users = FakeTable(
     1L -> User(1L, "user1@mail.com", "123456", "User 1", true, true),
     2L -> User(2L, "user2@mail.com", "123456", "User 2", true, true),
-    3L -> User(3L, "user3@mail.com", "123456", "User 3", true, true)
+    3L -> User(3L, "user3@mail.com", "123456", "User 3", true, true),
+    4L -> User(4L, "chandara@gmail.com", "123", "User 4", true, true)
   )
 
   // FOLDERS
