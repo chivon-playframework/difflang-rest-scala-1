@@ -13,7 +13,7 @@ object ServiceTranslate {
 
   implicit object LanguageWrites extends OWrites[ServiceTranslate] {
     def writes(serviceTran: ServiceTranslate): JsObject = Json.obj(
-      "SERVICE" -> serviceTran.serviceTranslate
+      "service" -> serviceTran.serviceTranslate
     )
   }
 
@@ -21,7 +21,7 @@ object ServiceTranslate {
     def reads(json: JsValue): JsResult[ServiceTranslate] = json match {
       case obj: JsObject => try {
 
-        val serviceTran = (obj \ "SERVICE").as[String]
+        val serviceTran = (obj \ "service").as[String]
         JsSuccess(ServiceTranslate(serviceTran))
 
       } catch {
