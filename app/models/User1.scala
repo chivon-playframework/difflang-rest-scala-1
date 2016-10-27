@@ -15,9 +15,13 @@ case class User1(
   state: String,
   city: String,
   zip: String,
-  mobile: String
+  mobile: String,
+  confirm_email: Boolean,
+  active: Boolean
 )
 object User1 {
+
+  //def insert(first_name:String,last_name:String,password:String,email:String,address:String,country:String,state:String,zip:String,phone:String)
   implicit object UserWrite extends OWrites[User1] {
 
     def writes(user: User1): JsObject = Json.obj(
@@ -30,7 +34,9 @@ object User1 {
       "state" -> user.state,
       "city" -> user.city,
       "zip" -> user.zip,
-      "phone" -> user.mobile
+      "phone" -> user.mobile,
+      "confirm_email" -> user.confirm_email,
+      "active" -> user.active
     )
   }
 
@@ -48,8 +54,10 @@ object User1 {
           val city = (obj \ "city").as[String]
           val zip = (obj \ "zip").as[String]
           val mobile = (obj \ "mobile").as[String]
+          val confirm_email = (obj \ "confirm_email").as[Boolean]
+          val active = (obj \ "active").as[Boolean]
 
-          JsSuccess(User1(first_name, last_name, password, email, address, country, state, city, zip, mobile))
+          JsSuccess(User1(first_name, last_name, password, email, address, country, state, city, zip, mobile, confirm_email, active))
         } catch {
           case cause: Throwable => JsError(cause.getMessage)
         }

@@ -2,19 +2,25 @@ package controllers
 
 import api.ApiError._
 import api.JsonCombinators._
-import models.{ User, ApiToken }
+import models.{ ApiToken, User }
 import play.api.mvc._
 import play.api.libs.json._
+
 import play.api.libs.functional.syntax._
 import play.api.Play.current
 import akka.actor.ActorSystem
+
 import scala.concurrent.duration._
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
-import javax.inject.Inject
-import play.api.i18n.MessagesApi
 
-class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem) extends api.ApiController {
+import javax.inject.Inject
+
+import com.difflang.models.User1
+import play.api.i18n.MessagesApi
+import repos.UserRepository
+
+class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userService: UserRepository) extends api.ApiController {
 
   implicit val loginInfoReads: Reads[Tuple2[String, String]] = (
     (__ \ "email").read[String](Reads.email) and
@@ -73,4 +79,14 @@ class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem) extends
     }
   }
 
+  /*def signUp1 = ApiActionWithBody { implicit request =>
+
+    val user = (request.body).as[User1]
+  def matchEmail(user1: User1):Boolean= {
+    val email:String=userService.findByEmail(user1.email)
+    case (user.email==)
+    userService.save(user).flatMap(result => created())
+
+  }
+  }*/
 }
