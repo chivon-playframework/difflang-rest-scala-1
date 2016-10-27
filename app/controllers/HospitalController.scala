@@ -2,19 +2,15 @@ package controllers
 
 import javax.inject.Inject
 
+import api.{ FilterData, Pagination, WrappJson }
+import models.Hospital
+import play.api.i18n.MessagesApi
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.json.Json
-import play.api.mvc._
-import reactivemongo.bson.{ BSONDocument, BSONObjectID }
+import repos.HospitalRepo
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
-import models.Hospital
-import api.{ FilterData, Pagination, WrappJson }
-import play.api.i18n.MessagesApi
-import repos.HospitalRepo
-
-import scala.util.Try
 /**
  * Created by CHHAI CHIVON on 10/21/2016.
  */
