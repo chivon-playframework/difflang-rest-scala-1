@@ -3,7 +3,6 @@ package controllers
 import javax.inject.Inject
 
 import api.{ FilterData, Pagination }
-import com.difflang.models.User1
 import play.api.i18n.MessagesApi
 import play.api.libs.json._
 import repos.UserRepository

@@ -2,8 +2,6 @@ package models
 
 import api.Page
 import java.text.SimpleDateFormat
-
-import com.difflang.models.User1
 import com.stripe.model.FraudDetails
 
 import scala.collection.mutable.Map

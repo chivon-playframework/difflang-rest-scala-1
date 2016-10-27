@@ -4,7 +4,6 @@ import api.ApiError._
 import models.{ ApiToken }
 import akka.actor.ActorSystem
 import javax.inject.Inject
-import com.difflang.models.User1
 import play.api.i18n.MessagesApi
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
