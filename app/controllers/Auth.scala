@@ -9,7 +9,6 @@ import play.api.libs.functional.syntax._
 import play.api.Play.current
 import akka.actor.ActorSystem
 
-import scala.concurrent.duration._
 import scala.concurrent.{ Await, Future }
 import scala.concurrent.ExecutionContext.Implicits.global
 import javax.inject.Inject
@@ -17,9 +16,6 @@ import javax.inject.Inject
 import com.difflang.models.User1
 import play.api.i18n.MessagesApi
 import repos.UserRepository
-
-import scala.concurrent.Await
-import scala.concurrent.duration._
 
 class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userRepo: UserRepository) extends api.ApiController {
 
@@ -80,43 +76,17 @@ class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userRep
     }
   }*/
 
-  def signUp1 = ApiActionWithBody { implicit request =>
-
+  def signUp = ApiActionWithBody { implicit request =>
     readFromRequest[Tuple3[String, String, User1]] {
-      case (email, password, user1) => {
+      case (email, password, user1) =>
         userRepo.findByEmail(email).flatMap {
           case Some(anotherUser) => errorCustom("api.error.signup.email.exists")
           case None => {
-
-            userRepo.save(User1(user1.id, user1.first_name, user1.last_name, password, email, user1.address, user1.country, user1.state, user1.city, user1.zip, user1.mobile, true, true)).flatMap(result => created("Insert Success"))
+            val user: User1 = User1(user1.id, user1.first_name, user1.last_name, password, email, user1.address, user1.country, user1.state, user1.city, user1.zip, user1.mobile, true, true)
+            userRepo.save(user).flatMap(result => created("Insert Success"))
           }
-
         }
-      }
     }
-
   }
-
-  /*def signIn1() = ApiActionWithBody { implicit request =>
-    readFromRequest[Tuple2[String, String]] {
-      case (email, pwd) =>
-        userRepo.findByEmail(email).flatMap {
-          case None => errorUserNotFound
-          case Some(user1) => {
-           if (user1.password != pwd) errorUserNotFound
-            else if (!user1.confirm_email) errorUserEmailUnconfirmed
-            else if (!user1.active) errorUserInactive
-            else ApiToken.create(request.apiKeyOpt.get, 1L).flatMap { token =>
-              ok(Json.obj(
-                "token" -> token,
-                "minutes" -> 10
-              ))
-            }
-
-          }
-        }
-    }
-
-  }*/
 
 }
