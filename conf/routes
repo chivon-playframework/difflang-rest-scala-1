@@ -84,7 +84,7 @@ PUT                 /api/v1/hospitals/:id                   controllers.Hospital
 
 
 #Test
-POST		/test						        controllers.Auth.test(email:String ?="chandara@gmail.com",password:String ?="123")
+#POST		/test						        controllers.Auth.test(email:String ?="chandara@gmail.com",password:String ?="123")
 #POST		/signup1						    controllers.Authentication.signUp
 
 

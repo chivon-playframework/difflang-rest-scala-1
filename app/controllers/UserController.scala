@@ -1,7 +1,7 @@
 package controllers
 
 import javax.inject.Inject
-import api.{ FilterData, Pagination}
+import api.{ FilterData, Pagination }
 import com.difflang.models.User1
 import play.api.i18n.MessagesApi
 import play.api.libs.json.Json
@@ -18,34 +18,34 @@ class UserController @Inject() (val userService: UserRepository, val messagesApi
   // TODO INSERT USER
   def create = SecuredApiActionWithBody { implicit request =>
     val user = (request.body).as[User1]
-    userService.save(user).flatMap(result => created())
+    userService.save(user).flatMap(result => created("Insert Success"))
   }
   // TODO SELECT BY ID
   def findById(id: String) = SecuredApiAction { implicit request =>
-    userService.select(id).flatMap(user => ok(Json.toJson(user)))
+    userService.select(id).flatMap(user => ok(user))
   }
 
   // TODO UPDATE BY ID
   def update(id: String) = SecuredApiActionWithBody {
     implicit request =>
       val user = (request.body).as[User1]
-      userService.update(id, user).flatMap(result => accepted())
+      userService.update(id, user).flatMap(result => accepted("Update Success"))
   }
 
   // TODO DELETE BY ID
   def delete(id: String) = SecuredApiAction { implicit request =>
-    userService.remove(id).flatMap(_ => noContent())
+    userService.remove(id).flatMap(_ => accepted("Delete success"))
   }
   // TODO FIND ALL USERS
   def findAll(sort: String, page: Int, limit: Int) = SecuredApiAction { implicit request =>
     val sortData = new FilterData(sort)
     val number1 = Await.result(userService.count(), 10 seconds)
     val pagination = new Pagination(page, limit, number1)
-    userService.findAll(pagination, sortData).flatMap(users => ok(Json.toJson(WrappJson(users, pagination))))
+    userService.findAll(pagination, sortData).flatMap(users => ok(users))
   }
 
   def findByEmail(email: String) = SecuredApiAction { implicit request =>
-    userService.findByEmail2(email).flatMap(user => ok(Json.toJson(user)))
+    userService.findByEmail2(email).flatMap(user => ok(user))
   }
 
 }

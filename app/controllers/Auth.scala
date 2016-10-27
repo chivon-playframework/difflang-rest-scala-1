@@ -5,6 +5,7 @@ import api.JsonCombinators._
 import models.{ ApiToken, User }
 import play.api.mvc._
 import play.api.libs.json._
+
 import play.api.libs.functional.syntax._
 import play.api.Play.current
 import akka.actor.ActorSystem
@@ -12,6 +13,7 @@ import akka.actor.ActorSystem
 import scala.concurrent.duration._
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+
 import javax.inject.Inject
 
 import com.difflang.models.User1
@@ -25,28 +27,10 @@ class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userRep
       (__ \ "password").read[String] tupled
   )
 
- /* def test(email: String, pwd: String) = ApiActionWithBody { implicit request =>
-    readFromRequest[Tuple2[String, String]] {
-      val users: User1 = userRepo.findByEmail2(email)
-
-      println("Email LOGIN" + email)
-      println("Password LOGIN" + pwd)
-      println("Passsword User FROM DB" + users.password)
-      if (users.password != pwd) errorUserNotFound
-      else ApiToken.create(request.apiKeyOpt.get, user.id).flatMap { token =>
-        ok(Json.obj(
-          "token" -> token,
-          "minutes" -> 10
-        ))
-      }
-
-    }
-  }*/
-
   def signIn() = ApiActionWithBody { implicit request =>
     readFromRequest[Tuple2[String, String]] {
       case (email, pwd) =>
-        User.findByEmail(email).flatMap {
+        userRepo.findByEmail2(email).flatMap {
           case None => errorUserNotFound
           case Some(user) => {
             if (user.password != pwd) errorUserNotFound
@@ -69,35 +53,24 @@ class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userRep
     }
   }
 
-  implicit val signUpInfoReads: Reads[Tuple3[String, String, User]] = (
+  implicit val signUpInfoReads: Reads[Tuple3[String, String, User1]] = (
     (__ \ "email").read[String](Reads.email) and
       (__ \ "password").read[String](Reads.minLength[String](6)) and
-      (__ \ "user").read[User] tupled
+      (__ \ "user").read[User1] tupled
   )
 
   def signUp = ApiActionWithBody { implicit request =>
-    readFromRequest[Tuple3[String, String, User]] {
-      case (email, password, user) =>
-        User.findByEmail(email).flatMap {
+    readFromRequest[Tuple3[String, String, User1]] {
+      case (email, password, user1) =>
+        userRepo.findByEmail2(email).flatMap {
           case Some(anotherUser) => errorCustom("api.error.signup.email.exists")
-          case None => User.insert(email, password, user.name).flatMap {
-            case (id, user) =>
-
-              // Send confirmation email. You will have to catch the link and confirm the email and activate the user.
-              // But meanwhile...
-              system.scheduler.scheduleOnce(30 seconds) {
-                User.confirmEmail(id)
-              }
-
-              ok(user)
+          case None => {
+            val user: User1 = User1(user1.id, user1.first_name, user1.last_name, password, email, user1.address, user1.country, user1.state, user1.city, user1.zip, user1.mobile, true, true)
+            userRepo.save(user).flatMap(result => created("INSERT SUCCESS"))
           }
         }
     }
   }
 
-  def main(args: Array[String]): Unit = {
-    val user:User1 = userRepo.findByEmail2("chandara@gmail.com")
-
-  }
 }
 
