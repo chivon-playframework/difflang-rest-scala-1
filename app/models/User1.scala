@@ -6,6 +6,7 @@ import play.api.libs.json._
  * Created by acer on 10/11/2016.
  */
 case class User1(
+  id: String,
   first_name: String,
   last_name: String,
   password: String,
@@ -25,6 +26,7 @@ object User1 {
   implicit object UserWrite extends OWrites[User1] {
 
     def writes(user: User1): JsObject = Json.obj(
+      "_id" -> user.id,
       "first_name" -> user.first_name,
       "last_name" -> user.last_name,
       "password" -> user.password,
@@ -34,7 +36,7 @@ object User1 {
       "state" -> user.state,
       "city" -> user.city,
       "zip" -> user.zip,
-      "phone" -> user.mobile,
+      "mobile" -> user.mobile,
       "confirm_email" -> user.confirm_email,
       "active" -> user.active
     )
@@ -44,6 +46,7 @@ object User1 {
     def reads(json: JsValue): JsResult[User1] = json match {
       case obj: JsObject =>
         try {
+          val id = (obj \ "_id").as[String]
           val first_name = (obj \ "first_name").as[String]
           val last_name = (obj \ "last_name").as[String]
           val password = (obj \ "password").as[String]
@@ -57,7 +60,7 @@ object User1 {
           val confirm_email = (obj \ "confirm_email").as[Boolean]
           val active = (obj \ "active").as[Boolean]
 
-          JsSuccess(User1(first_name, last_name, password, email, address, country, state, city, zip, mobile, confirm_email, active))
+          JsSuccess(User1(id, first_name, last_name, password, email, address, country, state, city, zip, mobile, confirm_email, active))
         } catch {
           case cause: Throwable => JsError(cause.getMessage)
         }

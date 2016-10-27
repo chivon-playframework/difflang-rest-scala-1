@@ -1,7 +1,7 @@
 package controllers
 
 import javax.inject.Inject
-import api.{ FilterData, Pagination}
+import api.{ FilterData, Pagination }
 import com.difflang.models.User1
 import play.api.i18n.MessagesApi
 import play.api.libs.json.Json
@@ -45,7 +45,7 @@ class UserController @Inject() (val userService: UserRepository, val messagesApi
   }
 
   def findByEmail(email: String) = SecuredApiAction { implicit request =>
-    userService.findByEmail2(email).flatMap(user => ok(user))
+    userService.findByEmail(email).flatMap(user => ok(user))
   }
 
 }

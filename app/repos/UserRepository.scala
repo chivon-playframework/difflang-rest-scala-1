@@ -26,5 +26,6 @@ trait UserRepository {
 
   def count()(implicit ec: ExecutionContext): Future[Int]
 
-  def findByEmail2(email: String)(implicit ec: ExecutionContext): Future[Option[JsObject]]
+  def findByEmail(email: String)(implicit ec: ExecutionContext): Future[Option[JsObject]]
+
 }
