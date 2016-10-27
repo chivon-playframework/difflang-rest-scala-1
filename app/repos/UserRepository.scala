@@ -1,6 +1,7 @@
 package repos
 
 import api.{ FilterData, Pagination }
+import com.difflang.models.User1
 import com.google.inject.ImplementedBy
 import impl.UserRepositoryImpl
 import play.api.libs.json.JsObject
