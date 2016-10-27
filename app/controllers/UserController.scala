@@ -45,7 +45,7 @@ class UserController @Inject() (val userService: UserRepository, val messagesApi
   }
 
   def findByEmail(email: String) = SecuredApiAction { implicit request =>
-    userService.findByEmail(email).flatMap(user => ok(Json.toJson(user)))
+    userService.findByEmail2(email).flatMap(user => ok(Json.toJson(user)))
   }
 
 }

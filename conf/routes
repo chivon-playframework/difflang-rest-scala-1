@@ -83,3 +83,8 @@ PUT                 /api/v1/hospitals/:id                   controllers.Hospital
 
 
 
+#Test
+#POST		/signout1						    controllers.Authentication.signOut
+#POST		/signup1						    controllers.Authentication.signUp
+
+
