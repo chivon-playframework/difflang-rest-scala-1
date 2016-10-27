@@ -1,11 +1,13 @@
 package controllers
 
 import javax.inject.Inject
+
 import api.{ FilterData, Pagination }
 import com.difflang.models.User1
 import play.api.i18n.MessagesApi
-import play.api.libs.json.Json
+import play.api.libs.json._
 import repos.UserRepository
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Await
 import scala.concurrent.duration._
@@ -43,9 +45,9 @@ class UserController @Inject() (val userService: UserRepository, val messagesApi
     val pagination = new Pagination(page, limit, number1)
     userService.findAll(pagination, sortData).flatMap(users => ok(users))
   }
-
+  // TODO FIND USER BY EMAIL
   def findByEmail(email: String) = SecuredApiAction { implicit request =>
-    userService.findByEmail2(email).flatMap(user => ok(user))
+    userService.findByEmail(email).flatMap(user => ok(user))
   }
 
 }

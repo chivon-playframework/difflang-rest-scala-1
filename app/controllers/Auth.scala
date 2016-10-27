@@ -5,15 +5,12 @@ import api.JsonCombinators._
 import models.{ ApiToken, User }
 import play.api.mvc._
 import play.api.libs.json._
-
 import play.api.libs.functional.syntax._
 import play.api.Play.current
 import akka.actor.ActorSystem
 
-import scala.concurrent.duration._
-import scala.concurrent.Future
+import scala.concurrent.{ Await, Future }
 import scala.concurrent.ExecutionContext.Implicits.global
-
 import javax.inject.Inject
 
 import com.difflang.models.User1
@@ -59,14 +56,15 @@ class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userRep
       (__ \ "user").read[User1] tupled
   )
 
+
   def signUp = ApiActionWithBody { implicit request =>
     readFromRequest[Tuple3[String, String, User1]] {
       case (email, password, user1) =>
-        userRepo.findByEmail2(email).flatMap {
+        userRepo.findByEmail(email).flatMap {
           case Some(anotherUser) => errorCustom("api.error.signup.email.exists")
           case None => {
             val user: User1 = User1(user1.id, user1.first_name, user1.last_name, password, email, user1.address, user1.country, user1.state, user1.city, user1.zip, user1.mobile, true, true)
-            userRepo.save(user).flatMap(result => created("INSERT SUCCESS"))
+            userRepo.save(user).flatMap(result => created("Insert Success"))
           }
         }
     }

@@ -1,10 +1,8 @@
 package com.difflang.models
 
-import play.api.libs.json._
-import play.modules.reactivemongo.json._
-import reactivemongo.bson.BSONObjectID
+
 /**
- * Created by acer on 10/11/2016.
+ * Created by Thanak on 10/11/2016.
  */
 case class User1(
   id: Option[BSONObjectID],
@@ -22,7 +20,5 @@ case class User1(
   active: Boolean
 )
 
-object User1 {
-  implicit val userFormat = Json.format[User1]
 }
 
