@@ -1,12 +1,10 @@
 package controllers
 
 import javax.inject.Inject
-
 import api.{ FilterData, Pagination }
 import models.Translator
 import play.api.i18n.MessagesApi
 import repos.TranslatorRepo
-
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
