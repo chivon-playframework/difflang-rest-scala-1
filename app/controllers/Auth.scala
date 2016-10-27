@@ -1,7 +1,7 @@
 package controllers
 
 import api.ApiError._
-import models.{ ApiToken}
+import models.{ ApiToken }
 import akka.actor.ActorSystem
 import javax.inject.Inject
 import com.difflang.models.User1
@@ -70,7 +70,6 @@ class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userRep
       (__ \ "password").read[String](Reads.minLength[String](6)) and
       (__ \ "user").read[User1] tupled
   )
-
 
   def signUp = ApiActionWithBody { implicit request =>
     readFromRequest[Tuple3[String, String, User1]] {

@@ -1,5 +1,7 @@
 package com.difflang.models
 
+import reactivemongo.bson.BSONObjectID
+//
 /**
  * Created by Thanak on 10/11/2016.
  */
@@ -19,5 +21,4 @@ case class User1(
   active: Boolean
 )
 
-}
 
