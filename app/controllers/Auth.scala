@@ -25,6 +25,24 @@ class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userRep
       (__ \ "password").read[String] tupled
   )
 
+ /* def test(email: String, pwd: String) = ApiActionWithBody { implicit request =>
+    readFromRequest[Tuple2[String, String]] {
+      val users: User1 = userRepo.findByEmail2(email)
+
+      println("Email LOGIN" + email)
+      println("Password LOGIN" + pwd)
+      println("Passsword User FROM DB" + users.password)
+      if (users.password != pwd) errorUserNotFound
+      else ApiToken.create(request.apiKeyOpt.get, user.id).flatMap { token =>
+        ok(Json.obj(
+          "token" -> token,
+          "minutes" -> 10
+        ))
+      }
+
+    }
+  }*/
+
   def signIn() = ApiActionWithBody { implicit request =>
     readFromRequest[Tuple2[String, String]] {
       case (email, pwd) =>
@@ -77,4 +95,9 @@ class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userRep
     }
   }
 
+  def main(args: Array[String]): Unit = {
+    val user:User1 = userRepo.findByEmail2("chandara@gmail.com")
+
+  }
 }
+
