@@ -18,5 +18,4 @@ class Users @Inject() (val messagesApi: MessagesApi) extends api.ApiController {
       ok(list.map(u => Json.obj("id" -> u.id, "name" -> u.name)))
     }
   }
-
 }
