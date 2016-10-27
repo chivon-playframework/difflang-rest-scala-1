@@ -1,6 +1,8 @@
 package models
 
+import play.api.libs.json.Json
 import reactivemongo.bson.BSONObjectID
+import play.modules.reactivemongo.json._
 //
 /**
  * Created by Thanak on 10/11/2016.
@@ -20,5 +22,7 @@ case class User1(
   confirm_email: Boolean,
   active: Boolean
 )
-
+object User1 {
+  implicit val user1Format = Json.format[User1]
+}
 
