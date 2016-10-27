@@ -1,13 +1,15 @@
 package controllers
 
 import api.ApiError._
-import models.{ ApiToken }
+import models.{ ApiToken, User1 }
 import akka.actor.ActorSystem
 import javax.inject.Inject
+
 import play.api.i18n.MessagesApi
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 import repos.UserRepository
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userRepo: UserRepository) extends api.ApiController {

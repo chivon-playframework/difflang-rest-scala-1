@@ -3,8 +3,10 @@ package repos
 import api.{ FilterData, Pagination }
 import com.google.inject.ImplementedBy
 import impl.UserRepositoryImpl
+import models.User1
 import play.api.libs.json.JsObject
 import reactivemongo.api.commands.WriteResult
+
 import scala.concurrent.{ ExecutionContext, Future }
 
 /**

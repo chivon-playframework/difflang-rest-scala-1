@@ -3,6 +3,7 @@ package repos.impl
 import javax.inject.Inject
 
 import api.{ FilterData, Pagination }
+import models.User1
 import play.api.libs.json.{ JsObject, Json }
 import play.modules.reactivemongo.ReactiveMongoApi
 import play.modules.reactivemongo.json._
