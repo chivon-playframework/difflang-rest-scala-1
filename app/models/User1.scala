@@ -20,7 +20,8 @@ case class User1(
   zip: String,
   mobile: String,
   confirm_email: Boolean,
-  active: Boolean
+  active: Boolean,
+  role: Byte
 )
 object User1 {
   implicit val user1Format = Json.format[User1]
