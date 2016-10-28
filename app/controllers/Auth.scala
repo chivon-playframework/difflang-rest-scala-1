@@ -1,7 +1,7 @@
 package controllers
 
 import api.ApiError._
-import models.{ ApiToken}
+import models.{ ApiToken }
 import akka.actor.ActorSystem
 import javax.inject.Inject
 import com.difflang.models.User1
