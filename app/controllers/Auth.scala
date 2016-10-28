@@ -1,7 +1,7 @@
 package controllers
 
 import api.ApiError._
-import models.{ ApiToken}
+import models.{ ApiToken }
 import akka.actor.ActorSystem
 import javax.inject.Inject
 import com.difflang.models.User1
@@ -50,6 +50,7 @@ class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userRep
             // userId should be chang to long if using with relational database
             else ApiToken.create(request.apiKeyOpt.get, user.id.toString).flatMap { token =>
               ok(Json.obj(
+                "role" -> user.role,
                 "token" -> token,
                 "minutes" -> 10
               ))
@@ -97,7 +98,7 @@ class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userRep
         userRepo.findByEmail(email).flatMap {
           case Some(anotherUser) => errorCustom("api.error.signup.email.exists")
           case None => {
-            val user: User1 = User1(user1.id, user1.first_name, user1.last_name, password, email, user1.address, user1.country, user1.state, user1.city, user1.zip, user1.mobile, true, true)
+            val user: User1 = User1(user1.id, user1.first_name, user1.last_name, password, email, user1.address, user1.country, user1.state, user1.city, user1.zip, user1.mobile, true, true, user1.role)
             userRepo.save(user).flatMap(result => created("Insert Success"))
           }
         }
