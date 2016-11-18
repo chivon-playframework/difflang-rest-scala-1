@@ -1,10 +1,14 @@
 package controllers
 
 import javax.inject.Inject
-import api.{ FilterData, Pagination }
+
+import api.{FilterData, Pagination}
 import models.Translator
 import play.api.i18n.MessagesApi
+import reactivemongo.bson.BSONObjectID
 import repos.TranslatorRepo
+import utils.BSONObjectIDConverter
+
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
@@ -14,10 +18,27 @@ import scala.concurrent.duration._
  */
 class TranslatorController @Inject() (val translatorService: TranslatorRepo, val messagesApi: MessagesApi) extends api.ApiController {
 
-  def create = SecuredApiActionWithBody {
+  def create(userID: BSONObjectID) = SecuredApiActionWithBody {
     implicit request =>
-      val translator = (request.body).as[Translator]
-      translatorService.save(translator).flatMap(result => created("Translator save successfully!"))
+      val translator = request.body.as[Translator]
+      translatorService.save(Translator(
+        Some(BSONObjectID.generate()),
+        translator.firstname,
+        translator.lastname,
+        translator.companyName,
+        translator.email,
+        translator.phone,
+        translator.address,
+        translator.state,
+        translator.zipcode,
+        translator.targetLanguage, // TODO INJECT LIST OF LANGUAGE
+        translator.nativeLanguage,
+        translator.officialDegree,
+        translator.translateSince,
+        translator.serviceTranslate, // TODO INJECT LIST OF SERVICE TRANSLATE
+        translator.translateExpertise, // TODO INJECT LIST OF TRANSLATE EXPERTISE
+        Some(userID)
+      )).flatMap(result => created("Translator save successfully!"))
   }
 
   // TODO GET ALL TRANSLATOR

@@ -2,8 +2,10 @@ package models
 
 import play.api.libs.json.{ JsObject, OWrites }
 import play.api.libs.json._
+
 import scala.collection.mutable.ListBuffer
 import play.modules.reactivemongo.json._
+import reactivemongo.bson.BSONObjectID
 
 /**
  * Created by CHHAI CHIVON on 10/21/2016.
@@ -21,7 +23,8 @@ object Mobile {
 }
 //TODO Use Case Class for to be BSON
 case class Hospital(
-  name: String,
+  _id: Option[BSONObjectID],
+  hospitalName: String,
   email: String,
   mobile: ListBuffer[Mobile], // TODO INJECT LIST OF PHONE NUMBER
   address: String,
@@ -29,13 +32,14 @@ case class Hospital(
   state: String,
   website: String,
   hospital_type: String,
-  discription: String
+  description: String,
+  user_id: Option[BSONObjectID]
 )
 //TODO Making JSON FORMAT
 object Hospital {
 
   //TODO Implicit Write AND Read Object
-  implicit val hospialFormat = Json.format[Hospital]
+  implicit val hospitalFormat = Json.format[Hospital]
 
 }
 

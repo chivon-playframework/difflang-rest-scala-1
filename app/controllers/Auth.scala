@@ -48,7 +48,7 @@ class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userRep
             else if (!user.confirm_email) errorUserEmailUnconfirmed
             else if (!user.active) errorUserInactive
             // userId should be chang to long if using with relational database
-            else ApiToken.create(request.apiKeyOpt.get, user.id.toString).flatMap { token =>
+            else ApiToken.create(request.apiKeyOpt.get, user._id.toString).flatMap { token =>
               ok(Json.obj(
                 "role" -> user.role,
                 "token" -> token,
@@ -98,7 +98,7 @@ class Auth @Inject() (val messagesApi: MessagesApi, system: ActorSystem, userRep
         userRepo.findByEmail(email).flatMap {
           case Some(anotherUser) => errorCustom("api.error.signup.email.exists")
           case None => {
-            val user: User1 = User1(user1.id, user1.first_name, user1.last_name, password, email, user1.address, user1.country, user1.state, user1.city, user1.zip, user1.mobile, true, true, user1.role)
+            val user: User1 = User1(user1._id, user1.username, password, email, true, user1.created_date, true, user1.role)
             userRepo.save(user).flatMap(result => created("Insert Success"))
           }
         }

@@ -40,7 +40,7 @@ class UserRepositoryImpl @Inject() (reactiveMongoApi: ReactiveMongoApi) extends 
   }
 
   override def findAll(pagination: Pagination, filterData: FilterData)(implicit ec: ExecutionContext): Future[List[JsObject]] = {
-    val genericQueryBuilder = collection.map(_.find(Json.obj()).options(QueryOpts(pagination.skip)))
+    val genericQueryBuilder = collection.map(_.find(Json.obj()).options(QueryOpts(pagination.skip)).sort(Json.obj(filterData.key -> filterData.value)))
     val cursor = genericQueryBuilder.map(_.cursor[JsObject](ReadPreference.Primary))
     cursor.flatMap(_.collect[List](pagination.Size))
   }
